@@ -65,8 +65,20 @@ requestAnimationFrame(animate);
 if (model) model.rotation.y += 0.002;
 renderer.render(scene, camera);
 }
+function takeSnapshot() {
+console.log('🖼️ takeSnapshot called');
+requestAnimationFrame(() => {
+console.log('🎞️ Rendering before snapshot...');
+renderer.render(scene, camera);
+const url = renderer.domElement.toDataURL('image/png');
+console.log('📂 Snapshot Data URL length:', url.length);
 
-// 📸 Snapshot function — globally available
+const link = document.createElement('a');
+link.download = 'skycanvas_snapshot.png';
+link.href = url;
+link.click();
+});
+}// 📸 Snapshot function — globally available
 window.takeSnapshot = function () {
 return new Promise((resolve) => {
 requestAnimationFrame(() => {
