@@ -68,11 +68,15 @@ renderer.render(scene, camera);
 
 // 📸 Snapshot function — globally available
 window.takeSnapshot = function () {
+return new Promise((resolve) => {
 requestAnimationFrame(() => {
 renderer.render(scene, camera);
+const dataUrl = renderer.domElement.toDataURL('image/png');
 const link = document.createElement('a');
 link.download = 'skycanvas_snapshot.png';
-link.href = renderer.domElement.toDataURL('image/png');
+link.href = dataUrl;
 link.click();
+resolve();
+});
 });
 };
